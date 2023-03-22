@@ -96,4 +96,39 @@ class MealTest {
        assertThrows(IllegalArgumentException.class, ()->meal.getDiscountedPrice(9));
 
    }
+
+
+   @ParameterizedTest
+    @ValueSource(ints = {5,10,15,18})
+    void mealPricesShouldBeLowerThan20 (int price){
+        assertThat(price, lessThan(20));
+   };
+
+
+   @ParameterizedTest
+   @MethodSource("createMealsWithNameAndPrice")
+   void burgerShouldHaveCorrectNameAndPrice (String name, int price) {
+       assertThat(name, containsString("burger"));
+       assertThat(price, greaterThanOrEqualTo(10));
+
+   }
+
+   private static Stream<Arguments> createMealsWithNameAndPrice(){
+        return Stream.of(
+                Arguments.of("Hamburger", 10),
+                Arguments.of("Chesburger", 12)
+        );
+   }
+
+   @ParameterizedTest
+   @MethodSource("createCakeNames")
+   void cakeNamesShouldEndWithCake (String name) {
+       assertThat(name, notNullValue());
+       assertThat(name, endsWith("cake"));
+   }
+
+   private static Stream <String> createCakeNames(){
+       List<String> cakeNames = Arrays.asList("Chesecake", "FruitCake", "Cupcace");
+       return cakeNames.stream();
+   }
 }
