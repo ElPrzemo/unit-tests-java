@@ -13,33 +13,19 @@ class AccountTest {
     @Test
     void newlyCreatedAccountShouldNotBeActive() {
 
-        //given
-        Account newAccount = new Account();
+//given
+// when
+Account newAccount = new Account();
 
-        //then
-        assertFalse(newAccount.isActive());
-        assertThat(newAccount.isActive(), equalTo(false));
-        assertThat(newAccount.isActive(), is(false));
-
+//then
+assertFalse(newAccount.isActive());
+//then
+assertThat(newAccount.isActive(), equalTo(false));
     }
 
     @Test
-    void activatedAccountShouldHaveActiveFlagSet() {
 
-        //given
-        Account newAccount = new Account();
-
-        //when
-        newAccount.activate();
-
-        //then
-        assertTrue(newAccount.isActive());
-        assertThat(newAccount.isActive(), equalTo(true));
-
-    }
-
-    @Test
-    void newlyCreatedAccountShouldNotHaveDefaultDeliveryAddressSet() {
+    void newlyCreatedAccountShouldNotHaveDefasultDeliveryAddressSet(){
 
         //given
         Account account = new Account();
@@ -50,64 +36,48 @@ class AccountTest {
         //then
         assertNull(address);
         assertThat(address, nullValue());
+    }
 
+
+    @Test void shouldReturnDiscountedPrice()
+    {
+        //given
+        Meal meal = new Meal(35);
+
+        //when
+        int discountedPrice = meal.getDiscountedPrice(7);
+
+        //then
+        assertEquals(28, discountedPrice);
+        assertThat(discountedPrice, equalTo(28));
     }
 
     @Test
-    void defaultDeliveryAddressShouldNotBeNullAfterBeingSet() {
-
-        //given
-        Address address = new Address("Krakowska", "67c");
-        Account account = new Account();
-        account.setDefaultDeliveryAddress(address);
-
-        //when
-        Address defaultAddress = account.getDefaultDeliveryAddress();
+    void referencesToDifferentObjectShouldNotBeEqual (){
+        Meal meal1 = new Meal(10);
+        Meal meal2 = meal1;
 
         //then
-        assertNotNull(defaultAddress);
-        assertThat(defaultAddress, is(notNullValue()));
-
-    }
-
-    @RepeatedTest(25)
-    void newAccountWithNotNullAddressShouldBeActive() {
-
-        //given
-        Address address = new Address("Puławska", "46/6");
-
-        //when
-        Account account = new Account(address);
-
-        //then
-        assumingThat(address != null, () -> {
-            assertTrue(account.isActive());
-        });
-
+        assertSame(meal1, meal2);
+        assertThat(meal1,sameInstance(meal2));
     }
 
     @Test
-    void invalidEmailShouldThrowException() {
-
+    void twoMealsShouldBeEqualWhenPriceAndNameAreTheSame(){
         //given
-        Account account = new Account();
 
-        //when
-        //then
-        assertThrows(IllegalArgumentException.class, () -> account.setEmail("wrongEmail"));
-
-    }
-
-    @Test
-    void validEmailShouldBeSet() {
-        //given
-        Account account = new Account();
-
-        //when
-        account.setEmail("kontakt@devfoundry.pl");
+        Meal meal1 = new Meal(10, "pizza");
+        Meal meal2 = new Meal(10, "pizza");
 
         //then
-        assertThat(account.getEmail(), is("kontakt@devfoundry.pl"));
+        assertEquals(meal1, meal2, "checking if two meals are equal");
+        assertThat(meal1, not(sameInstance(meal2)));
     }
+
+
+
+
+
+
 
 }

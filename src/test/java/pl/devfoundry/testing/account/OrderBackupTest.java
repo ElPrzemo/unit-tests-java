@@ -1,51 +1,49 @@
-package pl.devfoundry.testing.order;
+package pl.devfoundry.testing.account;
 
 import org.junit.jupiter.api.*;
-import pl.devfoundry.testing.meal.Meal;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
 
-class OrderBackupTest {
+public class OrderBackupTest {
 
     private static OrderBackup orderBackup;
 
     @BeforeAll
-    static void setup() throws FileNotFoundException {
+    static void setup () throws FileNotFoundException{
         orderBackup = new OrderBackup();
         orderBackup.createFile();
     }
 
     @BeforeEach
-    void appendAtTheStartOfTheLine() throws IOException {
+    void appendAtStartOfTheLine() throws IOException{
         orderBackup.getWriter().append("New order: ");
     }
 
     @AfterEach
-    void appendAtTheEndOfTheLine() throws IOException {
-        orderBackup.getWriter().append(" backed up.");
+    void appentAtTheEndOfTheLine () throws IOException{
+        orderBackup.getWriter().append(" backed up. ");
     }
 
-    @Tag("fries")
     @Test
     void backupOrderWithOneMeal() throws IOException {
-
         //given
         Meal meal = new Meal(7, "Fries");
         Order order = new Order();
-        order.addMealToOrder(meal);
+        order.addMealToOOrder(meal);
 
         //when
-        orderBackup.backupOrder(order);
+        orderBackup.backuporder(order);
 
         //then
-        System.out.println("Order: " + order.toString() + " backed up.");
+        System.out.println("Order: " + order.toString() + " backed up. ");
+
 
     }
+
 
     @AfterAll
-    static void tearDown() throws IOException {
+    static void tearDown() throws IOException{
         orderBackup.closeFile();
     }
-
 }
