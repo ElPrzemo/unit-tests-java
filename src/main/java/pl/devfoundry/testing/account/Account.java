@@ -10,7 +10,14 @@ public class Account {
         this.active = false;
     }
 
-
+    public Account(boolean active, Address defaultDeliveryAdress) {
+        this.defaultDeliveryAdress = defaultDeliveryAdress;
+        if(defaultDeliveryAdress !=null) {
+            activate();
+        }else {
+            this.active = false;
+        }
+    }
 
     public Account(Address address) {
     }

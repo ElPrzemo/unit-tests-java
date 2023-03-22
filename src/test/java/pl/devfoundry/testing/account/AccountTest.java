@@ -74,6 +74,36 @@ assertThat(newAccount.isActive(), equalTo(false));
         assertThat(meal1, not(sameInstance(meal2)));
     }
 
+    @Test
+    void defaultDeliveryAdressShouldNotNullAfterBeingSet (){
+        //given
+        Address address = new Address("Krakowska", "67c");
+        Account account = new Account();
+        account.setDefaultDeliveryAdress(address);
+
+        //when
+        Address defaultAddress = account.getDefaultDeliveryAddress();
+
+        //then
+        assertNotNull(defaultAddress);
+        assertThat(defaultAddress, is(notNullValue()));
+    }
+
+    void newAccountWithNotNullAdressShouldBeActive () {
+        //given
+        Address address = new Address("Puławska", "46/6");
+
+        //when
+        Account account = new Account(address);
+
+        //then
+        assumingThat(address != null, ()->{    //asumpcja przyjmuje dwa argumenty, bollen któy musi zostać spełniony i implementacje interfejsu excecutable
+            assertTrue(account.isActive());
+        });
+
+
+    }
+
 
 
 
