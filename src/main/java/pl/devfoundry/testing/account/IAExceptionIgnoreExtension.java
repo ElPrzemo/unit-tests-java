@@ -14,8 +14,5 @@ public class IAExceptionIgnoreExtension implements TestExecutionExceptionHandler
         if (throwable instanceof IllegalArgumentException) {
             LOGGER.info("Just ignored IllegalArgumentException");
         }
-
-
-
     }
 }
