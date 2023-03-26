@@ -1,32 +1,18 @@
 package pl.devfoundry.testing.account;
 
-import org.junit.jupiter.api.DynamicTest;
-import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.TestFactory;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.junit.jupiter.api.function.Executable;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 import org.junit.jupiter.params.provider.ValueSource;
-import org.mockito.Spy;
-import org.mockito.junit.jupiter.MockitoExtension;
-import pl.devfoundry.testing.account.Meal;
-
-
-import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collection;
 import java.util.List;
 import java.util.stream.Stream;
-
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.*;
 import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.BDDMockito.given;
-import static org.mockito.BDDMockito.then;
-import static org.mockito.Mockito.mock;
+
 
 class MealTest {
 
@@ -131,4 +117,16 @@ class MealTest {
        List<String> cakeNames = Arrays.asList("Chesecake", "FruitCake", "Cupcace");
        return cakeNames.stream();
    }
+
+    @ExtendWith(IAExceptionIgnoreExtension.class)
+    @ParameterizedTest
+    @ValueSource(ints = {1,3,7,8})
+    void mealPricesShouldBeLowerThan10 (int price){
+        if (price>5){
+            throw new IllegalArgumentException();
+        }
+
+        assertThat(price, lessThan(20));
+    };
+
 }
