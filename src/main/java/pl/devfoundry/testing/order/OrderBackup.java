@@ -19,7 +19,7 @@ public class OrderBackup {
         writer = new BufferedWriter(outputStreamWriter);
     }
 
-    Executable backuporder(Order order) throws IOException {
+    public Executable backuporder(Order order) throws IOException {
 
         if(writer == null){
             throw new IOException("Backup file not created");

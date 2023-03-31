@@ -21,7 +21,7 @@ public class Order {
         return meals;
     }
 
-    void cancel(){
+    public void cancel(){
         this.meals.clear();
     }
 
