@@ -1,4 +1,4 @@
-package pl.devfoundry.testing.account;
+package pl.devfoundry.testing;
 
 import java.util.Objects;
 

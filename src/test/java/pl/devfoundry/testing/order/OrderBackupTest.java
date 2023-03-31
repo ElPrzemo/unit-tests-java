@@ -1,6 +1,9 @@
-package pl.devfoundry.testing.account;
+package pl.devfoundry.testing.order;
 
 import org.junit.jupiter.api.*;
+import pl.devfoundry.testing.Meal;
+import pl.devfoundry.testing.order.Order;
+import pl.devfoundry.testing.order.OrderBackup;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -25,11 +28,12 @@ public class OrderBackupTest {
         orderBackup.getWriter().append(" backed up. ");
     }
 
+    @Tag("fries")
     @Test
     void backupOrderWithOneMeal() throws IOException {
         //given
         Meal meal = new Meal(7, "Fries");
-        Order order = new Order();
+        pl.devfoundry.testing.order.Order order = new Order();
         order.addMealToOOrder(meal);
 
         //when
@@ -41,9 +45,10 @@ public class OrderBackupTest {
 
     }
 
-
     @AfterAll
     static void tearDown() throws IOException{
         orderBackup.closeFile();
     }
+
+
 }

@@ -1,4 +1,4 @@
-package pl.devfoundry.testing.account;
+package pl.devfoundry.testing.order;
 
 public enum OrderStatus {
     ORDERED, READY, DELIVERED,

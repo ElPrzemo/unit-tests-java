@@ -1,4 +1,7 @@
-package pl.devfoundry.testing.account;
+package pl.devfoundry.testing.order;
+
+import org.junit.jupiter.api.function.Executable;
+import pl.devfoundry.testing.order.Order;
 
 import java.io.*;
 
@@ -16,8 +19,13 @@ public class OrderBackup {
         writer = new BufferedWriter(outputStreamWriter);
     }
 
-    void backuporder(Order order) throws IOException {
+    Executable backuporder(Order order) throws IOException {
+
+        if(writer == null){
+            throw new IOException("Backup file not created");
+        }
         writer.append(order.toString());
+        return null;
     }
 
     void closeFile() throws IOException {

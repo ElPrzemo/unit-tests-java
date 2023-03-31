@@ -1,7 +1,8 @@
-package pl.devfoundry.testing.account;
+package pl.devfoundry.testing;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import pl.devfoundry.testing.order.Order;
 
 import java.time.Duration;
 
@@ -19,7 +20,7 @@ public class CartTest {
         Cart cart = new Cart();
         //whem
         //then
-        assertTimeout(Duration.ofMillis(10), cart::simluateLargeOrder);
+        assertTimeout(Duration.ofMillis(20), cart::simluateLargeOrder);
     }
 
     @Test

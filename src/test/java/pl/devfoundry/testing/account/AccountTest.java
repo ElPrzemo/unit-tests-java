@@ -1,10 +1,10 @@
 package pl.devfoundry.testing.account;
 
 
-import org.junit.jupiter.api.RepeatedTest;
 import org.junit.jupiter.api.Test;
-
-import org.mockito.junit.MockitoJUnitRunner;
+import pl.devfoundry.testing.Meal;
+import pl.devfoundry.testing.account.Account;
+import pl.devfoundry.testing.account.Address;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.*;
@@ -110,8 +110,27 @@ assertThat(newAccount.isActive(), equalTo(false));
         });
 
 
+
     }
 
+    @Test
+    void invalidEmailShouldThrowException(){
+        //given
+        Account account = new Account();
+
+        //when
+        //then
+        assertThrows(IllegalArgumentException.class, () -> account.setEmail("wrongEmail"));
+    }
+
+    @Test
+    void validEmailShouldBeSet(){
+        //given
+        Account account = new Account();
+
+        //when
+        account.setEmail("kontakt@devfoundry.pl");
+    }
 
 
 

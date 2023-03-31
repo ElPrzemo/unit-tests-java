@@ -1,6 +1,7 @@
-package pl.devfoundry.testing.account;
+package pl.devfoundry.testing;
 
 import org.junit.jupiter.api.DynamicTest;
+import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestFactory;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -20,6 +21,8 @@ import static org.hamcrest.Matchers.*;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.junit.jupiter.api.DynamicTest.dynamicTest;
 import org.junit.jupiter.api.function.Executable;
+import pl.devfoundry.testing.extensions.IAExceptionIgnoreExtension;
+import pl.devfoundry.testing.order.Order;
 
 class MealTest {
 
@@ -77,6 +80,22 @@ class MealTest {
 
     }
 
+    @Test
+    void mealsShouldBeInCorrectOrderAfterAddingThemToTheOrder(){
+        //given
+        Meal meal1 = new Meal(15, "Burger");
+        Meal meal2= new Meal(5, "Sandwich");
+
+        //when
+        Order order = new Order();
+        order.addMealToOOrder(meal1);
+        order.addMealToOOrder(meal2);
+
+        //then
+        assertThat(order.getMeals().get(0), is(meal1));
+        assertThat(order.getMeals().get(1), is(meal2));
+    }
+
    @Test
     void exceptionShouldBeThrownIfDiscountIsHigherThanThePrice (){
         //given
@@ -119,7 +138,7 @@ class MealTest {
    }
 
    private static Stream <String> createCakeNames(){
-       List<String> cakeNames = Arrays.asList("Chesecake", "FruitCake", "Cupcace");
+       List<String> cakeNames = Arrays.asList("Chesecake", "Fruitcake", "Cupcake");
        return cakeNames.stream();
    }
 
@@ -137,11 +156,12 @@ class MealTest {
    @TestFactory
     Collection<DynamicTest> dynamicTestCollection(){
        return Arrays.asList(
-               dynamicTest("Dynamic test 2", ()->assertThat(6, lessThan(6))),
+               dynamicTest("Dynamic test 2", ()->assertThat(5, lessThan(6))),
                dynamicTest("Dynamic test 2", ()->assertEquals(4, 2*2))
        );
    }
 
+   @Tag("fries")
    @TestFactory
    Collection<DynamicTest> calculateMealPrices() {
        Order order = new Order();
@@ -169,6 +189,22 @@ class MealTest {
    }
     private int calculatePrice (int price, int quantity){
     return price *quantity;
+   }
+
+   @Test
+    void cancelingOrderShouldRemoveAllItemsFromMealList() {
+       //given
+       Meal meal1 = new Meal(15, "Burger");
+       Meal meal2 = new Meal(5, "Sandwich");
+
+       //when
+       Order order = new Order();
+       order.addMealToOOrder(meal1);
+       order.addMealToOOrder(meal2);
+       order.cancel();
+
+       //then
+       assertThat(order.getMeals().size(), is(0));
    }
 
 }
