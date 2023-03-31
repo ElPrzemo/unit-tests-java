@@ -18,7 +18,13 @@ public class AccountRepositoryStub implements AccountRepository {
         Account account3 = new Account(address2);
 
         return Arrays.asList(account1, account2, account3);
-    } 
+    }
+
+    @Override
+    public List<Account> getAllAccounts() {
+        return null;
+    }
+
     @Override
     public List<String> getByName(String name) {
         return null;

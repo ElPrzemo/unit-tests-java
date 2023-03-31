@@ -7,6 +7,6 @@ public interface AccountRepository {
     List<Account> getAllAcounts();
 
     List<Account> getAllAccounts();
-
     List<String> getByName(String name);
+
 }
