@@ -1,7 +1,8 @@
-package pl.devfoundry.testing;
+package pl.devfoundry.testing.CART;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import pl.devfoundry.testing.CART.Cart;
 import pl.devfoundry.testing.order.Order;
 
 import java.time.Duration;
