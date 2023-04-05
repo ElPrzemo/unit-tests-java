@@ -20,6 +20,9 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.*;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.junit.jupiter.api.DynamicTest.dynamicTest;
+import static org.mockito.BDDMockito.given;
+import static org.mockito.Mockito.mock;
+
 import org.junit.jupiter.api.function.Executable;
 import pl.devfoundry.testing.extensions.IAExceptionIgnoreExtension;
 import pl.devfoundry.testing.order.Order;
@@ -206,5 +209,27 @@ class MealTest {
        //then
        assertThat(order.getMeals().size(), is(0));
    }
+
+   @Test
+    void testMealSumPrice(){
+       //given
+
+       Meal meal = mock(Meal.class);
+
+       given(meal.getPrice()).willReturn(15);
+       given(meal.getQuantity()).willReturn(3);
+       given(meal.sumPrice()).willCallRealMethod();
+
+       //when
+       int result = meal.sumPrice();
+
+       //then
+       assertThat(result, equalTo(45));
+
+   }
+
+
+
+
 
 }
