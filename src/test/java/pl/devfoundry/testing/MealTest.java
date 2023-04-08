@@ -21,13 +21,20 @@ import static org.hamcrest.Matchers.*;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.junit.jupiter.api.DynamicTest.dynamicTest;
 import static org.mockito.BDDMockito.given;
+import static org.mockito.BDDMockito.then;
 import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.spy;
 
 import org.junit.jupiter.api.function.Executable;
+import org.mockito.Spy;
+import org.mockito.junit.jupiter.MockitoExtension;
 import pl.devfoundry.testing.extensions.IAExceptionIgnoreExtension;
 import pl.devfoundry.testing.order.Order;
 
 class MealTest {
+
+    @Spy
+    private Meal mealSpy;
 
     @Test
     void shouldReturnDiscountedPrice() {
@@ -74,8 +81,8 @@ class MealTest {
     void twoMealsShouldBeEqualWhenPriceAndNameAreTheSame() {
 
         //given
-        Meal meal1 = new Meal(10, "Pizza");
-        Meal meal2 = new Meal(10, "Pizza");
+        Meal meal1 = new Meal();
+        Meal meal2 = new Meal();
 
         //then
         assertEquals(meal1, meal2, "Checking if two meals are equal");
@@ -86,8 +93,8 @@ class MealTest {
     @Test
     void mealsShouldBeInCorrectOrderAfterAddingThemToTheOrder(){
         //given
-        Meal meal1 = new Meal(15, "Burger");
-        Meal meal2= new Meal(5, "Sandwich");
+        Meal meal1 = new Meal();
+        Meal meal2= new Meal();
 
         //when
         Order order = new Order();
@@ -103,7 +110,7 @@ class MealTest {
     void exceptionShouldBeThrownIfDiscountIsHigherThanThePrice (){
         //given
 
-       Meal meal = new Meal(8, "soup");
+       Meal meal = new Meal();
        //when
        //then
        assertThrows(IllegalArgumentException.class, ()->meal.getDiscountedPrice(9));
@@ -168,9 +175,9 @@ class MealTest {
    @TestFactory
    Collection<DynamicTest> calculateMealPrices() {
        Order order = new Order();
-       order.addMealToOOrder(new Meal(10, 2, "Hamburger"));
-       order.addMealToOOrder(new Meal(7, 4, "Fries"));
-       order.addMealToOOrder(new Meal(22, 3, "Pizza"));
+       order.addMealToOOrder(new Meal());
+       order.addMealToOOrder(new Meal());
+       order.addMealToOOrder(new Meal());
 
        Collection<DynamicTest> dynamicTests = new ArrayList<>();
 
@@ -197,8 +204,8 @@ class MealTest {
    @Test
     void cancelingOrderShouldRemoveAllItemsFromMealList() {
        //given
-       Meal meal1 = new Meal(15, "Burger");
-       Meal meal2 = new Meal(5, "Sandwich");
+       Meal meal1 = new Meal();
+       Meal meal2 = new Meal();
 
        //when
        Order order = new Order();
@@ -227,6 +234,30 @@ class MealTest {
        assertThat(result, equalTo(45));
 
    }
+
+    @Test
+    @ExtendWith(MockitoExtension.class)
+    void testMealSumPriceWithSpy(){
+        //given
+
+        Meal meal = spy(Meal.class);
+
+        given(mealSpy.getPrice()).willReturn(15);
+        given(mealSpy.getQuantity()).willReturn(3);
+
+
+        //when
+        int result = mealSpy.sumPrice();
+
+        //then
+        then(mealSpy).should().getPrice();
+        then(mealSpy).should().getQuantity();
+        assertThat(result, equalTo(45));
+
+    }
+
+
+
 
 
 

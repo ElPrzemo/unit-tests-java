@@ -7,7 +7,6 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import pl.devfoundry.testing.Meal;
 import pl.devfoundry.testing.extensions.BeforeAfterExtension;
-import pl.devfoundry.testing.order.Order;
 
 import java.util.Arrays;
 import java.util.List;
@@ -63,8 +62,8 @@ public class OrderTest {
     @Test
     void addingMealToOrderShouldIncreaseOrederSize(){
         //given
-        Meal meal = new Meal(15, "Burger");
-        Meal meal2 = new Meal(5, "Sandwich");
+        Meal meal = new Meal();
+        Meal meal2 = new Meal();
 
 
         //when
@@ -83,7 +82,7 @@ public class OrderTest {
     void removingMealFromOrderShouldDecreaseOrderSize(){
 
         //given
-        Meal meal = new Meal(15, "Burger");
+        Meal meal = new Meal();
 
 
 
@@ -101,8 +100,8 @@ public class OrderTest {
 
         //given
 
-        Meal meal1 = new Meal(15, "Burger");
-        Meal meal2 = new Meal(5, "Sandwich");
+        Meal meal1 = new Meal();
+        Meal meal2 = new Meal();
 
 
 
@@ -119,9 +118,9 @@ public class OrderTest {
     @Test
     void testIfTwoMealListAreTheSame (){
 
-        Meal meal1 = new Meal(15, "Burger");
-        Meal meal2 = new Meal(5, "Sandwich");
-        Meal meal3 = new Meal(7, "HotDog");
+        Meal meal1 = new Meal();
+        Meal meal2 = new Meal();
+        Meal meal3 = new Meal();
 
         List<Meal> meals1 = Arrays.asList(meal1, meal2);
         List<Meal> meals2 = Arrays.asList(meal1, meal2);
@@ -134,8 +133,8 @@ public class OrderTest {
     @Test
     void orderTotalPriceShouldNotExceedsMaxIntValue() {
         //given
-        Meal meal1 = new Meal(Integer.MAX_VALUE, "Burger");
-        Meal meal2 = new Meal(Integer.MAX_VALUE, "Sandwich");
+        Meal meal1 = new Meal();
+        Meal meal2 = new Meal();
 
         //when
         order.addMealToOOrder(meal1);

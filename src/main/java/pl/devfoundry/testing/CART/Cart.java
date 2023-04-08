@@ -24,7 +24,7 @@ public class Cart {
 
     void simluateLargeOrder(){
         for (int i = 0; i< 1000; i++){
-            Meal meal = new Meal(i%10, "Hamburger no " + i);
+            Meal meal = new Meal();
             Order order = new Order();
             order.addMealToOOrder(meal);
             addOrderToCart(order);

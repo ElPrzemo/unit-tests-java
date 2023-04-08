@@ -8,7 +8,7 @@ public class Meal {
     private int quantity;
     private String name;
 
-    public Meal(int price, String name) {
+    public Meal() {
         this.price = price;
         this.name = name;
     }
@@ -18,6 +18,7 @@ public class Meal {
         this.quantity = quantity;
         this.name = name;
     }
+
 
     public int getQuantity() {
         return quantity;

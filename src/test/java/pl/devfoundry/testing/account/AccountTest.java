@@ -3,8 +3,6 @@ package pl.devfoundry.testing.account;
 
 import org.junit.jupiter.api.Test;
 import pl.devfoundry.testing.Meal;
-import pl.devfoundry.testing.account.Account;
-import pl.devfoundry.testing.account.Address;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.*;
@@ -74,8 +72,8 @@ assertThat(newAccount.isActive(), equalTo(false));
     void twoMealsShouldBeEqualWhenPriceAndNameAreTheSame(){
         //given
 
-        Meal meal1 = new Meal(10, "pizza");
-        Meal meal2 = new Meal(10, "pizza");
+        Meal meal1 = new Meal();
+        Meal meal2 = new Meal();
 
         //then
         assertEquals(meal1, meal2, "checking if two meals are equal");
