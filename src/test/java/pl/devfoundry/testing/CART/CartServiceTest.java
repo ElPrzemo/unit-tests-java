@@ -1,6 +1,13 @@
 package pl.devfoundry.testing.CART;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.ArgumentCaptor;
+import org.mockito.Captor;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.junit.jupiter.MockitoExtension;
+import org.mockito.junit.jupiter.MockitoSettings;
+import org.mockito.quality.Strictness;
 import pl.devfoundry.testing.order.Order;
 import pl.devfoundry.testing.order.OrderStatus;
 
@@ -12,8 +19,19 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.BDDMockito.*;
 import static org.mockito.Mockito.*;
 
-
+@MockitoSettings(strictness = Strictness.STRICT_STUBS)
+@ExtendWith(MockitoExtension.class)
 class CartServiceTest {
+
+    @InjectMocks //służy do tego żeby okreslić w której klasie będą jakieś zależności, które w testach zamieniamy w mocki i których działanie będziemy chcieli programować lub weryfikować
+    private CartService cartService;
+    @Mock //określa dany obiekt mockowy
+    private CartHandler cartHandler;
+    @Captor
+    private ArgumentCaptor<Cart> argumentCaptor;
+
+
+
 
     private Cart resultCart;
 
@@ -25,8 +43,7 @@ class CartServiceTest {
         Cart cart = new Cart();
         cart.addOrderToCart(order);
 
-        CartHandler cartHandler = mock(CartHandler.class);
-        CartService cartService = new CartService(cartHandler);
+
 
         given(cartHandler.canHandleCart(cart)).willReturn(true);
 
@@ -58,8 +75,7 @@ class CartServiceTest {
         Cart cart = new Cart();
         cart.addOrderToCart(order);
 
-        CartHandler cartHandler = mock(CartHandler.class);
-        CartService cartService = new CartService(cartHandler);
+
 
         given(cartHandler.canHandleCart(any())).willReturn(true);  // matchera any() zezwoli na zwrócenie metody z dowolną wartością//
                                                 //konwencja mówi żeby używać matcherów z bliskich danego typu
@@ -105,9 +121,6 @@ class CartServiceTest {
         Cart cart = new Cart();
         cart.addOrderToCart(order);
 
-        CartHandler cartHandler = mock(CartHandler.class);
-        CartService cartService = new CartService(cartHandler);
-
         given(cartHandler.canHandleCart(argThat(cart1 -> cart1.getOrders().size()>02))).willReturn(true);
         // powyższy handler argThat  podstawia lambde
         //when
@@ -130,8 +143,7 @@ class CartServiceTest {
         Cart cart = new Cart();
         cart.addOrderToCart(order);
 
-        CartHandler cartHandler = mock(CartHandler.class);
-        CartService cartService = new CartService(cartHandler);
+
 
         given(cartHandler.canHandleCart(cart)).willThrow(IllegalStateException.class);
 
@@ -150,10 +162,8 @@ class CartServiceTest {
         Cart cart = new Cart();
         cart.addOrderToCart(order);
 
-        CartHandler cartHandler = mock(CartHandler.class);
-        CartService cartService = new CartService(cartHandler);
 
-        ArgumentCaptor<Cart> argumentCaptor = ArgumentCaptor.forClass(Cart.class);
+
 
         given(cartHandler.canHandleCart(cart)).willReturn(true);
 
@@ -177,8 +187,7 @@ class CartServiceTest {
         Cart cart = new Cart();
         cart.addOrderToCart(order);
 
-        CartHandler cartHandler = mock(CartHandler.class);
-        CartService cartService = new CartService(cartHandler);
+
 
         given(cartHandler.canHandleCart(cart)).willReturn(true);
 
@@ -203,9 +212,6 @@ class CartServiceTest {
         Order order = new Order();
         Cart cart = new Cart();
         cart.addOrderToCart(order);
-
-        CartHandler cartHandler = mock(CartHandler.class);
-        CartService cartService = new CartService(cartHandler);
 
         doAnswer(invocationOnMock -> {
             Cart argumentCart = invocationOnMock.getArgument(0);
